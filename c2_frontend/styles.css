@@ -1,0 +1,333 @@
+/* Modern Tactical Dark Theme CSS for Project Vigilance C2 Dashboard */
+:root {
+    --bg-dark: #0a0e14;
+    --card-bg: #121820;
+    --border-color: #1f2937;
+    --primary: #3b82f6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --text-light: #f3f4f6;
+    --text-muted: #9ca3af;
+    --font-heading: 'Orbitron', sans-serif;
+    --font-body: 'Roboto Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0f172a;
+    padding: 12px 24px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #38bdf8;
+}
+
+.badge-live {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: var(--success);
+    border: 1px solid var(--success);
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+}
+
+.nav-metrics {
+    display: flex;
+    gap: 16px;
+}
+
+.metric-pill {
+    background-color: #1e293b;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    border: 1px solid #334155;
+}
+
+.metric-pill .label {
+    color: var(--text-muted);
+    margin-right: 6px;
+}
+
+.metric-pill .value {
+    font-weight: bold;
+}
+
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-danger { color: var(--danger); }
+.text-primary { color: var(--primary); }
+.font-bold { font-weight: bold; }
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    height: calc(100vh - 65px);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.section-header h2 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: #94a3b8;
+    letter-spacing: 1px;
+}
+
+.grid-badge {
+    background-color: #1e293b;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #38bdf8;
+}
+
+.camera-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.camera-tile {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tile-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background-color: #1a222d;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.status-pill {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.status-online {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: var(--success);
+}
+
+.feed-placeholder {
+    height: 220px;
+    background: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.live-rec {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: rgba(0,0,0,0.6);
+    color: var(--danger);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.target-overlay {
+    border: 2px solid var(--danger);
+    width: 100px;
+    height: 140px;
+    position: relative;
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.box-normal {
+    border-color: var(--success);
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.target-tag {
+    position: absolute;
+    top: -20px;
+    left: -2px;
+    background-color: var(--danger);
+    color: #fff;
+    font-size: 0.65rem;
+    padding: 2px 4px;
+    white-space: nowrap;
+}
+
+.alerts-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+}
+
+.alert-card {
+    background-color: var(--card-bg);
+    border-left: 4px solid var(--danger);
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.alert-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+}
+
+.event-tag {
+    font-weight: bold;
+    color: var(--danger);
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-danger-sm {
+    background-color: var(--danger);
+    color: white;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+}
+
+.btn-success { background-color: var(--success); color: white; }
+.btn-warning { background-color: var(--warning); color: black; }
+.btn-danger { background-color: var(--danger); color: white; }
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.hidden { display: none; }
+
+.modal-content {
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    width: 900px;
+    max-width: 95vw;
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: #1e293b;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+    font-family: var(--font-heading);
+    color: #38bdf8;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.meta-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+}
+
+.meta-table td {
+    padding: 8px;
+    border-bottom: 1px solid #1e293b;
+    font-size: 0.85rem;
+}
+
+.action-box {
+    margin-top: 16px;
+}
+
+textarea {
+    width: 100%;
+    height: 80px;
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

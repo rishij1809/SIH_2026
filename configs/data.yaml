@@ -1,0 +1,7 @@
+path: C:/Users/Admin/Documents/SIH 2026/data/yolo_dataset
+train: images/train
+val: images/val
+
+names:
+  0: knife
+  1: person

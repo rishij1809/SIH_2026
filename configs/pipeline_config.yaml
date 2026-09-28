@@ -1,0 +1,47 @@
+# Project Vigilance - Stage 3 Real-Time Stream & Pipeline Configuration
+
+streams:
+  camera_1:
+    name: "Main Entrance CCTV"
+    url: "0"  # Set to camera index 0 (webcam), video path, or RTSP URL e.g. "rtsp://admin:pass@192.168.1.100:554/stream1"
+    target_fps: 12.0
+    buffer_max_size: 5
+    reconnect_attempts: 5
+    reconnect_delay_sec: 2.0
+  camera_2:
+    name: "Perimeter East CCTV"
+    url: "data/raw_videos/demo_cctv_feed.mp4"
+    target_fps: 12.0
+    buffer_max_size: 5
+
+pipeline:
+  yolo_model_path: "models/yolo_person.onnx"
+  yolo_pt_fallback: "models/yolo_person.pt"
+  distress_model_path: "models/distress_model.onnx"
+  distress_pt_fallback: "models/distress_model.pt"
+  
+  detection_confidence: 0.45
+  iou_threshold: 0.45
+  distress_confidence_threshold: 0.65
+
+tracker:
+  max_stale_frames: 30
+  window_length: 30
+  num_keypoints: 33
+  channels: 3
+  tracking_metric: "iou" # "iou" or "centroid"
+
+alert:
+  classes:
+    0: "Normal"
+    1: "Universal Help Signal"
+    2: "Aggression/Struggle"
+    3: "Fall"
+  alert_classes: [1, 2, 3]  # Trigger alert events on Help Signal, Aggression, or Fall
+  cooldown_sec: 3.0
+
+viewer:
+  enable_display: true
+  window_name: "Project Vigilance - Real-Time Surveillance Telemetry"
+  draw_skeletons: true
+  draw_hud: true

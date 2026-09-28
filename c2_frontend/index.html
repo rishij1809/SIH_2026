@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT VIGILANCE - TACTICAL C2 COMMAND DASHBOARD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-dark text-light">
+
+    <!-- Header Navigation Bar -->
+    <header class="navbar">
+        <div class="brand">
+            <span class="shield-icon">🛡️</span>
+            <span class="brand-title">PROJECT VIGILANCE</span>
+            <span class="badge badge-live">LIVE C2 SYSTEM</span>
+        </div>
+        <div class="nav-metrics">
+            <div class="metric-pill"><span class="label">CPU TEMP</span> <span id="val-cpu-temp" class="value text-warning">42°C</span></div>
+            <div class="metric-pill"><span class="label">INFER LATENCY</span> <span id="val-latency" class="value text-success">14.2 ms</span></div>
+            <div class="metric-pill"><span class="label">PIPELINE FPS</span> <span id="val-fps" class="value text-primary">12.0 FPS</span></div>
+            <div class="metric-pill"><span class="label">BACKHAUL</span> <span id="val-backhaul" class="value text-success">ONLINE (SATCOM)</span></div>
+        </div>
+    </header>
+
+    <!-- Main Tactical Operational Grid -->
+    <main class="dashboard-grid">
+        
+        <!-- Left Side: Live Multi-Camera Grid (2x2 Grid) -->
+        <section class="camera-section">
+            <div class="section-header">
+                <h2>LIVE SURVEILLANCE FEED GRID</h2>
+                <span class="grid-badge">4 CAMERA STREAMS ACTIVE</span>
+            </div>
+
+            <div class="camera-grid">
+                <!-- Camera Tile 1 -->
+                <div class="camera-tile">
+                    <div class="tile-header">
+                        <span class="cam-title">CAM-01 | ALPHA GATE OUTPOST</span>
+                        <span class="status-pill status-online">ONLINE</span>
+                    </div>
+                    <div class="video-container">
+                        <div class="feed-placeholder">
+                            <span class="live-rec">● LIVE 12.0 FPS</span>
+                            <div class="target-overlay box-alert">
+                                <span class="target-tag">[ID #99] HELP SIGNAL 94%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera Tile 2 -->
+                <div class="camera-tile">
+                    <div class="tile-header">
+                        <span class="cam-title">CAM-02 | EAST PERIMETER WALL</span>
+                        <span class="status-pill status-online">ONLINE</span>
+                    </div>
+                    <div class="video-container">
+                        <div class="feed-placeholder">
+                            <span class="live-rec">● LIVE 12.0 FPS</span>
+                            <div class="target-overlay box-normal">
+                                <span class="target-tag">[ID #42] NORMAL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera Tile 3 -->
+                <div class="camera-tile">
+                    <div class="tile-header">
+                        <span class="cam-title">CAM-03 | SOUTH CORRIDOR</span>
+                        <span class="status-pill status-online">ONLINE</span>
+                    </div>
+                    <div class="video-container">
+                        <div class="feed-placeholder">
+                            <span class="live-rec">● LIVE 12.0 FPS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera Tile 4 -->
+                <div class="camera-tile">
+                    <div class="tile-header">
+                        <span class="cam-title">CAM-04 | VEHICLE CHECKPOINT</span>
+                        <span class="status-pill status-online">ONLINE</span>
+                    </div>
+                    <div class="video-container">
+                        <div class="feed-placeholder">
+                            <span class="live-rec">● LIVE 12.0 FPS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Side: Real-Time Alert Stream & Incident Review Drawer -->
+        <section class="alert-section">
+            <div class="section-header">
+                <h2>TACTICAL ALERTS FEED</h2>
+                <button id="btn-sim-alert" class="btn btn-danger-sm">+ SIMULATE DISTRESS</button>
+            </div>
+
+            <!-- Scrollable Alerts Feed -->
+            <div id="alerts-feed" class="alerts-feed">
+                <!-- Dynamic Alert Cards rendered here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Incident Detailed Inspection Modal -->
+    <div id="incident-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>INCIDENT INSPECTION & REVIEW</h3>
+                <button id="btn-close-modal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="media-column">
+                    <h4>Pre/Post 10-Second Incident Video Clip</h4>
+                    <div class="clip-box">
+                        <video id="incident-video" controls autoplay loop width="100%">
+                            <source src="" type="video/mp4">
+                            Video playback not supported.
+                        </video>
+                    </div>
+                    <h4>Peak-Confidence Keyframe Snapshot</h4>
+                    <div class="keyframe-box">
+                        <img id="incident-keyframe" src="" alt="Annotated Keyframe Snapshot">
+                    </div>
+                </div>
+                <div class="details-column">
+                    <h4>TACTICAL METADATA</h4>
+                    <table class="meta-table">
+                        <tr><td>INCIDENT ID:</td><td id="meta-id" class="text-warning">--</td></tr>
+                        <tr><td>TIMESTAMP:</td><td id="meta-time">--</td></tr>
+                        <tr><td>CAMERA:</td><td id="meta-cam">--</td></tr>
+                        <tr><td>EVENT TYPE:</td><td id="meta-event" class="text-danger font-bold">--</td></tr>
+                        <tr><td>CONFIDENCE:</td><td id="meta-conf" class="text-success">--</td></tr>
+                        <tr><td>TRACK ID:</td><td id="meta-track">--</td></tr>
+                    </table>
+
+                    <div class="action-box">
+                        <h4>OPERATOR ACTION</h4>
+                        <textarea id="operator-notes" placeholder="Enter tactical response notes..."></textarea>
+                        <div class="btn-group">
+                            <button id="btn-ack" class="btn btn-success">ACKNOWLEDGE</button>
+                            <button id="btn-false" class="btn btn-warning">FALSE ALARM</button>
+                            <button id="btn-escalate" class="btn btn-danger">ESCALATE FIRST RESPONDERS</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+# Project Vigilance - Stage 4 Alert Dispatch & Verification Configuration
+
+verification:
+  confidence_threshold: 0.65       # Minimum confidence score theta
+  persistence_window_N: 5          # Number of consecutive temporal evaluations to check
+  persistence_threshold_M: 3       # Minimum required positive detections out of N
+  cooldown_sec: 60.0               # Per-track/per-camera alert debounce period in seconds
+  enable_roi_filter: false         # Enable spatial ROI polygon boundary filtering
+  roi_polygons:
+    camera_1: [[100, 100], [1180, 100], [1180, 680], [100, 680]]
+
+recorder:
+  pre_incident_sec: 5.0            # Seconds of video captured before incident trigger
+  post_incident_sec: 5.0           # Seconds of video captured after incident trigger
+  video_fps: 12.0
+  storage_dir: "data/incidents"
+  clip_subfolder: "clips"
+  keyframe_subfolder: "keyframes"
+  video_codec: "mp4v"
+
+dispatch:
+  enable_webhook: true
+  webhook_url: "https://httpbin.org/post"  # Central C2 Command endpoint
+  webhook_timeout_sec: 5.0
+  webhook_max_retries: 3
+
+  enable_twilio_sms: false
+  twilio_account_sid: "AC_MOCK_SID_12345"
+  twilio_auth_token: "MOCK_TOKEN_12345"
+  twilio_from_number: "+18005550199"
+  emergency_to_numbers: ["+18005550100"]
+
+  enable_local_alarm: true         # Trigger local outpost siren/strobe relay
+  alarm_relay_gpio_pin: 18
+
+offline_resilience:
+  enable_sqlite_cache: true
+  db_path: "data/offline_cache.db"
+  sync_interval_sec: 10.0
+  max_retry_backoff_sec: 60.0

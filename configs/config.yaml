@@ -1,0 +1,93 @@
+# Project Vigilance - Master Configuration File
+# Real-Time Safety Surveillance Platform (YOLOv8 + ST-GCN / Bi-LSTM)
+
+pipeline:
+  name: "Project Vigilance Stage 1 & Stage 2"
+  version: "2.0.0"
+  random_seed: 42
+
+paths:
+  raw_videos_dir: "data/raw_videos"
+  extracted_frames_dir: "data/extracted_frames"
+  yolo_dataset_dir: "data/yolo_dataset"
+  sequence_dataset_dir: "data/sequence_dataset"
+  augmented_dir: "data/augmented"
+  models_dir: "models"
+
+ingestion:
+  target_fps: 12.0
+  similarity_method: "ssim"  # Options: "ssim", "diff"
+  similarity_threshold: 0.94
+  resize_width: 1280
+  resize_height: 720
+  save_format: "png"
+
+yolo:
+  split_ratios:
+    train: 0.70
+    val: 0.20
+    test: 0.10
+  classes:
+    0: "person"
+  yaml_output_path: "configs/data.yaml"
+  training:
+    model_name: "yolov8n.pt"
+    epochs: 50
+    batch_size: 16
+    imgsz: 640
+    patience: 15
+    lr0: 0.01
+    lrf: 0.01
+    weight_decay: 0.0005
+
+sequence:
+  window_size: 30
+  step_size: 5
+  num_keypoints: 33  # MediaPipe Pose keypoints
+  channels: 3        # (x, y, visibility)
+  keypoint_backend: "mediapipe"
+  min_detection_confidence: 0.5
+  min_tracking_confidence: 0.5
+  labels:
+    0: "Normal"
+    1: "Universal Help Signal"
+    2: "Aggression/Struggle"
+    3: "Fall"
+  training:
+    epochs: 40
+    batch_size: 32
+    learning_rate: 0.001
+    weight_decay: 0.0001
+    use_focal_loss: true
+    focal_gamma: 2.0
+    checkpoint_metric: "macro_f1"
+
+augmentation:
+  yolo:
+    samples_per_image: 3
+    motion_blur_prob: 0.4
+    brightness_contrast_prob: 0.5
+    gaussian_noise_prob: 0.3
+    perspective_prob: 0.3
+    occlusion_prob: 0.4
+  sequence:
+    samples_per_sequence: 3
+    spatial_jitter_std: 0.015
+    spatial_scale_range: [0.85, 1.15]
+    spatial_rotation_deg: 10.0
+    frame_dropout_prob: 0.3
+    max_dropout_frames: 3
+    speed_stretch_prob: 0.3
+
+export:
+  onnx_opset: 13
+  fp16_export: true
+  torchscript_filename: "distress_traced.pt"
+  distress_onnx_filename: "distress_model.onnx"
+  yolo_onnx_filename: "yolo_person.onnx"
+
+verification:
+  check_corrupted_files: true
+  validate_yolo_bboxes: true
+  validate_sequence_continuity: true
+  class_imbalance_warning_ratio: 3.0
